@@ -225,15 +225,15 @@
         }
 
         .barra.entrada-bim {
-            border: 5px dashed #0066FF;
+            border: 2.5px dashed #0047AB;
         }
 
         .barra.entrada-srm {
-            border: 5px solid #000000;
+            border: 2.5px dashed #000000;
         }
 
         .barra.entrada-ia {
-            border: 5px dashed #008000;
+            border: 2.5px dashed #00AA00;
         }
 
         .tooltip {
@@ -627,7 +627,7 @@
         function renderAutomatizacion() {
             const actividadesData = [
                 {capitulo: 'CALCULO DE CANTIDADES', nombre: 'CALCULO DE CANTIDADES', dias: 4, inicio: 1, entrada: 'BIM'},
-                {capitulo: '', nombre: 'PLIEGO DE LICITACIÓN REDES', dias: 'NA', inicio: 1, entrada: ''},
+                {capitulo: '', nombre: 'PLIEGO DE LICITACIÓN REDES', dias: 0, inicio: 1, entrada: ''},
                 {capitulo: '', nombre: 'LICITACIONES', dias: 1, inicio: 5, entrada: 'SRM'},
                 {capitulo: '', nombre: 'RECIBO DE COTIZACIÓN', dias: 7, inicio: 6, entrada: 'SRM'},
                 {capitulo: 'CUADRO COMPARATIVO', nombre: 'REALIZAR CUADRO COMPARATIVO EN FORMATO DE CONTROL', dias: 1, inicio: 13, entrada: 'SRM'},
@@ -635,13 +635,13 @@
                 {capitulo: '', nombre: 'CONCILIACIÓN', dias: 4, inicio: 2, entrada: ''},
                 {capitulo: '', nombre: 'CONCILIACIÓN CON PPTO, TECNICO, DISEÑO', dias: 'TR', inicio: 'TR', entrada: ''},
                 {capitulo: '', nombre: 'PRESENTACIÓN CUADRO COMPARATIVO COMITÉ', dias: 7, inicio: 14, entrada: ''},
-                {capitulo: '', nombre: 'FIRMA ZOHO', dias: 'TR', inicio: 'TR', entrada: 'SRM'},
+                {capitulo: '', nombre: 'FIRMA ZOHO', dias: 0, inicio: 21, entrada: 'SRM'},
                 {capitulo: '', nombre: 'CREACIÓN DE TERCERO', dias: 4, inicio: 2, entrada: 'SRM'},
-                {capitulo: 'SOLICITUD DE CONTRATACION', nombre: 'REALIZAR SOLICITUD DE CONTRATO', dias: 'TR', inicio: 'TR', entrada: 'SRM'},
+                {capitulo: 'SOLICITUD DE CONTRATACION', nombre: 'REALIZAR SOLICITUD DE CONTRATO', dias: 0, inicio: 21, entrada: 'SRM'},
                 {capitulo: '', nombre: 'PROYECCIÓN', dias: 4, inicio: 2, entrada: ''},
                 {capitulo: 'ELABORACION DE CONTRATO', nombre: 'MIGRACIÓN DE SOLICITUD DE CONTRATO A SINCO', dias: 1, inicio: 21, entrada: ''},
                 {capitulo: '', nombre: 'APROBACIÓN EN SINCO', dias: 1, inicio: 22, entrada: ''},
-                {capitulo: '', nombre: 'IMPRESIÓN DIGITAL, DEPENDE DE LA CANTIDAD DE CONTRATOS ( MINUTAS)', dias: 1, inicio: 23, entrada: ''},
+                {capitulo: '', nombre: 'IMPRESIÓN DIGITAL, DEPENDE DE LA CANTIDAD DE CONTRATOS ( MINUTAS)', dias: 1, inicio: 23, entrada: 'IA'},
                 {capitulo: '', nombre: 'FIRMA ZOHO', dias: 2, inicio: 24, entrada: 'IA'},
                 {capitulo: '', nombre: 'TRÁMITE, RECEPCIÓN Y REVISIÓN PÓLIZAS', dias: 7, inicio: 26, entrada: 'IA'},
                 {capitulo: 'PERFECCIONAMIENTO DE CONTRATO', nombre: 'ENVÍO A CONTROL INTERNO', dias: 7, inicio: 26, entrada: ''},
@@ -650,7 +650,7 @@
                 {capitulo: '', nombre: 'ACTA DE OBRA Y FACTURACIÓN', dias: 7, inicio: 34, entrada: ''},
                 {capitulo: '', nombre: 'PROGRAMACIÓN Y APROBACIÓN', dias: 7, inicio: 34, entrada: ''},
                 {capitulo: '', nombre: 'PROGRAMACIÓN DE PAGOS', dias: 7, inicio: 34, entrada: ''},
-                {capitulo: 'PAGOS', nombre: 'VERIFICACIÓN DE PAGOS', dias: 'TR', inicio: 'TR', entrada: ''}
+                {capitulo: 'PAGOS', nombre: 'VERIFICACIÓN DE PAGOS', dias: 0, inicio: 41, entrada: ''}
             ];
 
             const maxDay = Math.max(...actividadesData
@@ -694,15 +694,15 @@
             legend.appendChild(separator);
 
             const entradas = [
-                {label: 'BIM', color: '#0066FF'},
-                {label: 'SRM', color: '#FF6600'},
-                {label: 'IA', color: '#00CC00'}
+                {label: 'BIM', color: '#0047AB'},
+                {label: 'SRM', color: '#000000'},
+                {label: 'IA-TECNOLOGIA', color: '#00AA00'}
             ];
 
             entradas.forEach(({label, color}) => {
                 const item = document.createElement('div');
                 item.className = 'legend-item';
-                item.innerHTML = `<div style="width: 20px; height: 20px; border: 2px dashed ${color}; border-radius: 3px;"></div><span>${label}</span>`;
+                item.innerHTML = `<div style="width: 20px; height: 20px; border: 2.5px dashed ${color}; border-radius: 3px;"></div><span>${label}</span>`;
                 legend.appendChild(item);
             });
 
@@ -1304,7 +1304,7 @@
             } else if (tipoEscenario === 'automatizacion') {
                 const actividadesData = [
                     {capitulo: 'CALCULO DE CANTIDADES', nombre: 'CALCULO DE CANTIDADES', dias: 4, inicio: 1, entrada: 'BIM'},
-                    {capitulo: '', nombre: 'PLIEGO DE LICITACIÓN REDES', dias: 'NA', inicio: 1, entrada: ''},
+                    {capitulo: '', nombre: 'PLIEGO DE LICITACIÓN REDES', dias: 0, inicio: 1, entrada: ''},
                     {capitulo: '', nombre: 'LICITACIONES', dias: 1, inicio: 5, entrada: 'SRM'},
                     {capitulo: '', nombre: 'RECIBO DE COTIZACIÓN', dias: 7, inicio: 6, entrada: 'SRM'},
                     {capitulo: 'CUADRO COMPARATIVO', nombre: 'REALIZAR CUADRO COMPARATIVO EN FORMATO DE CONTROL', dias: 1, inicio: 13, entrada: 'SRM'},
@@ -1312,13 +1312,13 @@
                     {capitulo: '', nombre: 'CONCILIACIÓN', dias: 4, inicio: 2, entrada: ''},
                     {capitulo: '', nombre: 'CONCILIACIÓN CON PPTO, TECNICO, DISEÑO', dias: 'TR', inicio: 'TR', entrada: ''},
                     {capitulo: '', nombre: 'PRESENTACIÓN CUADRO COMPARATIVO COMITÉ', dias: 7, inicio: 14, entrada: ''},
-                    {capitulo: '', nombre: 'FIRMA ZOHO', dias: 'TR', inicio: 'TR', entrada: 'SRM'},
+                    {capitulo: '', nombre: 'FIRMA ZOHO', dias: 0, inicio: 21, entrada: 'SRM'},
                     {capitulo: '', nombre: 'CREACIÓN DE TERCERO', dias: 4, inicio: 2, entrada: 'SRM'},
-                    {capitulo: 'SOLICITUD DE CONTRATACION', nombre: 'REALIZAR SOLICITUD DE CONTRATO', dias: 'TR', inicio: 'TR', entrada: 'SRM'},
+                    {capitulo: 'SOLICITUD DE CONTRATACION', nombre: 'REALIZAR SOLICITUD DE CONTRATO', dias: 0, inicio: 21, entrada: 'SRM'},
                     {capitulo: '', nombre: 'PROYECCIÓN', dias: 4, inicio: 2, entrada: ''},
                     {capitulo: 'ELABORACION DE CONTRATO', nombre: 'MIGRACIÓN DE SOLICITUD DE CONTRATO A SINCO', dias: 1, inicio: 21, entrada: ''},
                     {capitulo: '', nombre: 'APROBACIÓN EN SINCO', dias: 1, inicio: 22, entrada: ''},
-                    {capitulo: '', nombre: 'IMPRESIÓN DIGITAL, DEPENDE DE LA CANTIDAD DE CONTRATOS ( MINUTAS)', dias: 1, inicio: 23, entrada: ''},
+                    {capitulo: '', nombre: 'IMPRESIÓN DIGITAL, DEPENDE DE LA CANTIDAD DE CONTRATOS ( MINUTAS)', dias: 1, inicio: 23, entrada: 'IA'},
                     {capitulo: '', nombre: 'FIRMA ZOHO', dias: 2, inicio: 24, entrada: 'IA'},
                     {capitulo: '', nombre: 'TRÁMITE, RECEPCIÓN Y REVISIÓN PÓLIZAS', dias: 7, inicio: 26, entrada: 'IA'},
                     {capitulo: 'PERFECCIONAMIENTO DE CONTRATO', nombre: 'ENVÍO A CONTROL INTERNO', dias: 7, inicio: 26, entrada: ''},
@@ -1327,7 +1327,7 @@
                     {capitulo: '', nombre: 'ACTA DE OBRA Y FACTURACIÓN', dias: 7, inicio: 34, entrada: ''},
                     {capitulo: '', nombre: 'PROGRAMACIÓN Y APROBACIÓN', dias: 7, inicio: 34, entrada: ''},
                     {capitulo: '', nombre: 'PROGRAMACIÓN DE PAGOS', dias: 7, inicio: 34, entrada: ''},
-                    {capitulo: 'PAGOS', nombre: 'VERIFICACIÓN DE PAGOS', dias: 'TR', inicio: 'TR', entrada: ''}
+                    {capitulo: 'PAGOS', nombre: 'VERIFICACIÓN DE PAGOS', dias: 0, inicio: 41, entrada: ''}
                 ];
                 maxDay = Math.max(...actividadesData
                     .filter(a => a.dias !== 'TR' && a.inicio !== 'TR' && typeof a.dias === 'number')

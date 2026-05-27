@@ -1149,10 +1149,10 @@
         function renderComparacionSimplificada(contenedor, tipoEscenario) {
             contenedor.innerHTML = '';
 
-            let datos, actividades, capitulos, maxDay;
+            let datos, actividades, capitulos, maxDay, actividadesData;
 
             if (tipoEscenario === 'automatizacion') {
-                const actividadesData = [
+                actividadesData = [
                     {capitulo: 'CALCULO DE CANTIDADES', nombre: 'CALCULO DE CANTIDADES', dias: 4, inicio: 1, entrada: 'BIM'},
                     {capitulo: '', nombre: 'PLIEGO DE LICITACIÓN REDES', dias: 0, inicio: 1, entrada: ''},
                     {capitulo: '', nombre: 'LICITACIONES', dias: 1, inicio: 5, entrada: 'SRM'},

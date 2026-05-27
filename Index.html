@@ -276,28 +276,8 @@
     <div class="tabs-container">
         <button class="tab-button active" onclick="switchTab('pesimista')" id="btn-pesimista">Contratación Específica</button>
         <button class="tab-button" onclick="switchTab('optimista')" id="btn-optimista">Proceso Actual</button>
-        <button class="tab-button" onclick="switchTab('srm')" id="btn-srm">Control</button>
         <button class="tab-button" onclick="switchTab('automatizacion')" id="btn-automatizacion">SRM + Automatización</button>
         <button class="tab-button" onclick="switchTab('comparar')" id="btn-comparar">Comparar</button>
-    </div>
-
-    <!-- ESCENARIO SRM -->
-    <div id="srm" class="scenario-container">
-        <div class="container">
-            <div class="legend" id="legend-srm"></div>
-            <div class="escala-container">
-                <div class="escala-labels"></div>
-                <div class="escala" id="escala-header-srm"></div>
-            </div>
-            <div class="header">
-                <div class="header-capitulo">Capítulo</div>
-                <div class="header-actividad">Actividad</div>
-            </div>
-            <div class="content-wrapper">
-                <div class="left-section" id="left-section-srm"></div>
-                <div class="timeline-section" id="timeline-section-srm"></div>
-            </div>
-        </div>
     </div>
 
     <!-- ESCENARIO AUTOMATIZACIÓN -->
@@ -369,7 +349,6 @@
                     <select id="escenario1" style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" onchange="actualizarComparacion()">
                         <option value="pesimista">Contratación Específica</option>
                         <option value="optimista">Proceso Actual</option>
-                        <option value="srm">Control</option>
                         <option value="automatizacion">SRM + Automatización</option>
                     </select>
                 </div>
@@ -378,8 +357,7 @@
                     <select id="escenario2" style="padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;" onchange="actualizarComparacion()">
                         <option value="pesimista">Contratación Específica</option>
                         <option value="optimista">Proceso Actual</option>
-                        <option value="srm" selected>Control</option>
-                        <option value="automatizacion">SRM + Automatización</option>
+                        <option value="automatizacion" selected>SRM + Automatización</option>
                     </select>
                 </div>
             </div>
@@ -416,7 +394,6 @@
         const tiemposEscenarios = {
             'pesimista': 203,
             'optimista': 91,
-            'srm': 56,
             'automatizacion': null // Se calcula dinámicamente
         };
 
@@ -432,7 +409,7 @@
 
         const actividadAreas = [
             'DIRECTOR', 'DIRECTOR', 'DIRECTOR', 'DIRECTOR', 'DIRECTOR',
-            'CONTROL_COSTOS', 'CONTROL_COSTOS', 'TECNICO', 'COMITE', 'DIRECTOR',
+            'CONTROL_COSTOS', 'CONTROL_COSTOS', 'CONTROL_COSTOS', 'COMITE', 'DIRECTOR',
             'ADMINISTRATIVO', 'DIRECTOR', 'CONTROL_COSTOS', 'ADMINISTRATIVO', 'DIRECTOR',
             'ADMINISTRATIVO', 'ADMINISTRATIVO', 'CONTRATISTA', 'ADMINISTRATIVO', 'CONTROL_INTERNO',
             'DIRECTOR', 'ADMINISTRATIVO', 'DIRECTOR', 'ADMINISTRATIVO', 'ADMINISTRATIVO'
@@ -442,185 +419,9 @@
         function actualizarBotonesPestanas() {
             document.getElementById('btn-pesimista').textContent = 'Contratación Específica (' + tiemposEscenarios['pesimista'] + ' días)';
             document.getElementById('btn-optimista').textContent = 'Proceso Actual (' + tiemposEscenarios['optimista'] + ' días)';
-            document.getElementById('btn-srm').textContent = 'Control (' + tiemposEscenarios['srm'] + ' días)';
             if (tiemposEscenarios['automatizacion']) {
                 document.getElementById('btn-automatizacion').textContent = 'SRM + Automatización (' + tiemposEscenarios['automatizacion'] + ' días)';
             }
-        }
-
-        // ============ ESCENARIO SRM ============
-        function renderSRM() {
-            const actividadesSRM = [
-                {capitulo: 'CALCULO DE CANTIDADES', nombre: 'CALCULO DE CANTIDADES', tics: 1, duracion: 4, inicio: 1},
-                {capitulo: '', nombre: 'PLIEGO DE LICITACIÓN REDES', tics: 0, duracion: 0, inicio: 5},
-                {capitulo: '', nombre: 'LICITACIONES', tics: 0, duracion: 1, inicio: 5},
-                {capitulo: '', nombre: 'RECIBO DE COTIZACIÓN', tics: 0, duracion: 7, inicio: 6},
-                {capitulo: 'CUADRO COMPARATIVO', nombre: 'REALIZAR CUADRO COMPARATIVO EN FORMATO DE CONTROL', tics: 1, duracion: 1, inicio: 13},
-                {capitulo: '', nombre: 'REVISIÓN POR ÁREA DE CONTROL DE COSTOS', tics: 0, duracion: 7, inicio: 14},
-                {capitulo: '', nombre: 'CONCILIACIÓN', tics: 1, duracion: 0, inicio: 21},
-                {capitulo: '', nombre: 'CONCILIACIÓN CON PPTO, TECNICO, DISEÑO', tics: 1, duracion: 0, inicio: 21},
-                {capitulo: '', nombre: 'PRESENTACIÓN CUADRO COMPARATIVO COMITÉ', tics: 1, duracion: 0, inicio: 21},
-                {capitulo: '', nombre: 'FIRMA ZOHO', tics: 0, duracion: 7, inicio: 21},
-                {capitulo: '', nombre: 'CREACIÓN DE TERCERO', tics: 0, duracion: 0, inicio: 28},
-                {capitulo: 'SOLICITUD DE CONTRATACION', nombre: 'REALIZAR SOLICITUD DE CONTRATO', tics: 1, duracion: 0, inicio: 28},
-                {capitulo: '', nombre: 'PROYECCIÓN', tics: 0, duracion: 7, inicio: 13},
-                {capitulo: 'ELABORACION DE CONTRATO', nombre: 'MIGRACIÓN DE SOLICITUD DE CONTRATO A SINCO', tics: 1, duracion: 1, inicio: 28},
-                {capitulo: '', nombre: 'APROBACIÓN EN SINCO', tics: 0, duracion: 2, inicio: 29},
-                {capitulo: '', nombre: 'IMPRESIÓN DIGITAL', tics: 0, duracion: 1, inicio: 31},
-                {capitulo: '', nombre: 'FIRMA ZOHO', tics: 0, duracion: 7, inicio: 32},
-                {capitulo: '', nombre: 'TRÁMITE, RECEPCIÓN Y REVISIÓN PÓLIZAS', tics: 0, duracion: 7, inicio: 39},
-                {capitulo: 'PERFECCIONAMIENTO DE CONTRATO', nombre: 'ENVÍO A CONTROL INTERNO', tics: 0, duracion: 1, inicio: 46},
-                {capitulo: '', nombre: 'LISTA DE CHEQUEO CONTROL INTERNO', tics: 0, duracion: 2, inicio: 47},
-                {capitulo: 'CORTES DE OBRA', nombre: 'PREACTAS DIGITALES', tics: 0, duracion: 7, inicio: 49},
-                {capitulo: '', nombre: 'ACTA DE OBRA Y FACTURACIÓN', tics: 0, duracion: 0, inicio: 56},
-                {capitulo: '', nombre: 'PROGRAMACIÓN Y APROBACIÓN', tics: 0, duracion: 0, inicio: 56},
-                {capitulo: '', nombre: 'PROGRAMACIÓN DE PAGOS', tics: 0, duracion: 0, inicio: 56},
-                {capitulo: 'PAGOS', nombre: 'VERIFICACIÓN DE PAGOS', tics: 0, duracion: 1, inicio: 56}
-            ];
-
-            const data = actividadesSRM.map((act, idx) => ({
-                left: (act.inicio - 1) * 10,
-                width: act.duracion * 10 || 5,
-                label: act.duracion > 0 ? act.duracion : '',
-                area: idx,
-                tics: act.tics,
-                milestone: act.duracion === 0
-            }));
-
-            const legend = document.getElementById('legend-srm');
-            legend.innerHTML = '';
-            Object.entries(areas).forEach(([key, {color, label}]) => {
-                const item = document.createElement('div');
-                item.className = 'legend-item';
-                item.innerHTML = `<div class="legend-color" style="background: ${color}"></div><span>${label}</span>`;
-                legend.appendChild(item);
-            });
-
-            const escalaHeader = document.getElementById('escala-header-srm');
-            escalaHeader.innerHTML = '';
-
-            let escalaScroll = document.createElement('div');
-            escalaScroll.style.flex = '1';
-            escalaScroll.style.overflow = 'auto';
-            escalaScroll.style.display = 'flex';
-            escalaScroll.style.minHeight = '50px';
-            escalaScroll.id = 'escala-scroll-srm';
-
-            const maxDaySRM = 64;
-            const scaleWidthSRM = maxDaySRM * 10;
-            const scaleContent = document.createElement('div');
-            scaleContent.style.minWidth = scaleWidthSRM + 'px';
-            scaleContent.style.position = 'relative';
-            scaleContent.style.height = '40px';
-            scaleContent.style.paddingTop = '5px';
-
-            for (let day = 0; day <= maxDaySRM; day += 1) {
-                const position = day * 10;
-                const line = document.createElement('div');
-                line.style.position = 'absolute';
-                line.style.left = position + 'px';
-                line.style.top = (day % 10 === 0 ? '0' : '5');
-                line.style.width = '1px';
-                line.style.height = (day % 10 === 0 ? '15px' : '10px');
-                line.style.background = (day % 10 === 0 ? '#333' : '#999');
-                scaleContent.appendChild(line);
-
-                if (day % 5 === 0) {
-                    const label = document.createElement('div');
-                    label.textContent = day;
-                    label.style.position = 'absolute';
-                    label.style.left = (position - 10) + 'px';
-                    label.style.top = '18px';
-                    label.style.fontSize = '10px';
-                    label.style.fontWeight = 'bold';
-                    label.style.width = '20px';
-                    label.style.textAlign = 'center';
-                    scaleContent.appendChild(label);
-                }
-            }
-
-            escalaScroll.appendChild(scaleContent);
-            escalaHeader.appendChild(escalaScroll);
-
-            const leftSection = document.getElementById('left-section-srm');
-            leftSection.innerHTML = '';
-            actividadesSRM.forEach((act, idx) => {
-                const row = document.createElement('div');
-                row.className = 'row' + (act.tics === 1 ? ' tics-highlighted' : '');
-                const capitulo = document.createElement('div');
-                capitulo.className = 'capitulo-name';
-                capitulo.textContent = act.capitulo;
-                const actividad = document.createElement('div');
-                actividad.className = 'actividad-name';
-                actividad.textContent = act.nombre;
-                row.appendChild(capitulo);
-                row.appendChild(actividad);
-                leftSection.appendChild(row);
-            });
-
-            const timelineSection = document.getElementById('timeline-section-srm');
-            timelineSection.innerHTML = '';
-            data.forEach((bar, idx) => {
-                const row = document.createElement('div');
-                row.className = 'row' + (actividadesSRM[idx].tics === 1 ? ' tics-highlighted' : '');
-                const timeline = document.createElement('div');
-                timeline.className = 'timeline';
-                timeline.style.minWidth = scaleWidthSRM + 'px';
-                timeline.style.position = 'relative';
-
-                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                svg.setAttribute('class', 'grid-lines');
-                svg.style.position = 'absolute';
-                svg.style.top = '0';
-                svg.style.left = '0';
-                svg.style.width = '100%';
-                svg.style.height = '100%';
-                svg.setAttribute('viewBox', '0 0 ' + scaleWidthSRM + ' 50');
-                svg.setAttribute('preserveAspectRatio', 'none');
-
-                for (let day = 0; day <= maxDaySRM; day += 1) {
-                    const position = (day / maxDaySRM) * 100;
-                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                    line.setAttribute('x1', position + '%');
-                    line.setAttribute('y1', '0');
-                    line.setAttribute('x2', position + '%');
-                    line.setAttribute('y2', '100%');
-                    line.setAttribute('stroke', day % 10 === 0 ? '#333' : '#e0e0e0');
-                    line.setAttribute('stroke-width', day % 10 === 0 ? '1' : '0.5');
-                    svg.appendChild(line);
-                }
-                timeline.appendChild(svg);
-
-                const barra = document.createElement('div');
-                barra.className = bar.milestone ? 'barra milestone' : 'barra';
-                const areaKey = actividadAreas[idx];
-                barra.style.background = areas[areaKey].color;
-                barra.style.zIndex = '1';
-
-                if (bar.milestone) {
-                    barra.style.left = (bar.left - 6) + 'px';
-                } else {
-                    barra.style.left = bar.left + 'px';
-                    barra.textContent = bar.label || '';
-                }
-                barra.style.width = bar.width + 'px';
-
-                timeline.appendChild(barra);
-                row.appendChild(timeline);
-                timelineSection.appendChild(row);
-            });
-
-            const leftSectionEl = document.getElementById('left-section-srm');
-            timelineSection.addEventListener('scroll', () => {
-                escalaScroll.scrollLeft = timelineSection.scrollLeft;
-                leftSectionEl.scrollTop = timelineSection.scrollTop;
-            });
-            escalaScroll.addEventListener('scroll', () => {
-                timelineSection.scrollLeft = escalaScroll.scrollLeft;
-            });
-            leftSectionEl.addEventListener('scroll', () => {
-                timelineSection.scrollTop = leftSectionEl.scrollTop;
-            });
         }
 
         // ============ ESCENARIO AUTOMATIZACIÓN ============
@@ -633,7 +434,7 @@
                 {capitulo: 'CUADRO COMPARATIVO', nombre: 'REALIZAR CUADRO COMPARATIVO EN FORMATO DE CONTROL', dias: 1, inicio: 13, entrada: 'SRM'},
                 {capitulo: '', nombre: 'REVISIÓN POR ÁREA DE CONTROL DE COSTOS', dias: 4, inicio: 2, entrada: ''},
                 {capitulo: '', nombre: 'CONCILIACIÓN', dias: 4, inicio: 2, entrada: ''},
-                {capitulo: '', nombre: 'CONCILIACIÓN CON PPTO, TECNICO, DISEÑO', dias: 'TR', inicio: 'TR', entrada: ''},
+                {capitulo: '', nombre: 'CONCILIACIÓN CON PPTO, TECNICO, DISEÑO', dias: 'DISCONTINUA', inicio: 2, entrada: ''},
                 {capitulo: '', nombre: 'PRESENTACIÓN CUADRO COMPARATIVO COMITÉ', dias: 7, inicio: 14, entrada: ''},
                 {capitulo: '', nombre: 'FIRMA ZOHO', dias: 0, inicio: 21, entrada: 'SRM'},
                 {capitulo: '', nombre: 'CREACIÓN DE TERCERO', dias: 4, inicio: 2, entrada: 'SRM'},
@@ -663,6 +464,8 @@
             const data = actividadesData.map((act, idx) => {
                 if (act.dias === 'NA') {
                     return { left: (act.inicio - 1) * 10, width: 0, label: '', area: idx, type: 'NA' };
+                } else if (act.dias === 'DISCONTINUA') {
+                    return { left: (act.inicio - 1) * 10, width: timelineWidth - ((act.inicio - 1) * 10), label: '', area: idx, type: 'DISCONTINUA', maxDay: maxDay };
                 } else if (act.dias === 'TR' && act.inicio === 'TR') {
                     return { left: 0, width: timelineWidth, label: '', area: idx, type: 'TR' };
                 } else {
@@ -799,82 +602,120 @@
                 }
                 timeline.appendChild(svg);
 
-                const barra = document.createElement('div');
-                const areaKey = actividadAreas[idx];
-                barra.style.background = areas[areaKey].color;
-                barra.style.zIndex = '1';
-                barra.style.left = bar.left + 'px';
-                barra.style.width = bar.width + 'px';
+                if (bar.type === 'DISCONTINUA') {
+                    const areaKey = actividadAreas[idx];
+                    const color = areas[areaKey].color;
 
-                if (bar.type === 'NA') {
-                    barra.className = 'barra na';
-                    barra.textContent = '✗';
-                } else if (bar.type === 'TR') {
-                    barra.className = 'barra';
-                    barra.style.opacity = '0.3';
-                    if (actividadesData[idx].entrada) {
-                        barra.classList.add('entrada-' + actividadesData[idx].entrada.toLowerCase());
+                    // Crear puntos desde inicio hasta maxDay
+                    for (let day = actividadesData[idx].inicio; day <= bar.maxDay; day += 2) {
+                        const punto = document.createElement('div');
+                        punto.className = 'barra milestone';
+                        punto.style.background = color;
+                        punto.style.left = ((day - 1) * 10 - 6) + 'px';
+                        punto.style.zIndex = '1';
+                        timeline.appendChild(punto);
                     }
-                } else if (bar.milestone) {
-                    barra.className = 'barra milestone';
-                    barra.textContent = '';
-                } else {
-                    barra.className = 'barra';
-                    barra.textContent = bar.label || '';
-                    if (actividadesData[idx].entrada) {
-                        barra.classList.add('entrada-' + actividadesData[idx].entrada.toLowerCase());
-                    }
-                }
 
-                const tooltip = document.createElement('div');
-                tooltip.className = 'tooltip';
+                    // Crear barra continua desde maxDay en adelante
+                    const barraFinal = document.createElement('div');
+                    barraFinal.className = 'barra';
+                    barraFinal.style.background = color;
+                    barraFinal.style.left = (bar.maxDay * 10) + 'px';
+                    barraFinal.style.width = (timelineWidth - (bar.maxDay * 10)) + 'px';
+                    barraFinal.style.zIndex = '1';
 
-                if (bar.type === 'NA') {
-                    tooltip.textContent = 'No Aplica';
-                } else if (bar.type === 'TR') {
-                    const entrada = actividadesData[idx].entrada ? ` | ${actividadesData[idx].entrada}` : '';
-                    tooltip.textContent = `Transversal (Inicio a Fin)${entrada}`;
-                } else {
-                    const inicio = actividadesData[idx].inicio;
-                    const fin = inicio + (actividadesData[idx].dias || 0) - 1;
-                    const entrada = actividadesData[idx].entrada ? ` | ${actividadesData[idx].entrada}` : '';
-                    tooltip.textContent = `Día ${inicio} - Día ${fin}${entrada}`;
-                }
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = `Continuo desde Día ${bar.maxDay}`;
+                    barraFinal.appendChild(tooltip);
 
-                barra.appendChild(tooltip);
-
-                barra.addEventListener('mouseenter', () => {
-                    tooltip.style.display = 'block';
-                    if (idx === 0) {
-                        tooltip.classList.remove('top');
-                        tooltip.classList.add('bottom');
-                    } else {
-                        tooltip.classList.remove('bottom');
+                    barraFinal.addEventListener('mouseenter', () => {
+                        tooltip.style.display = 'block';
                         tooltip.classList.add('top');
-                    }
-                    const tooltipRect = tooltip.getBoundingClientRect();
-                    if (tooltipRect.left < 0) {
-                        tooltip.style.left = '0';
-                        tooltip.style.transform = 'none';
-                    } else if (tooltipRect.right > window.innerWidth) {
-                        tooltip.style.right = '0';
-                        tooltip.style.left = 'auto';
-                        tooltip.style.transform = 'none';
+                    });
+                    barraFinal.addEventListener('mouseleave', () => {
+                        tooltip.style.display = 'none';
+                    });
+
+                    timeline.appendChild(barraFinal);
+                } else {
+                    const barra = document.createElement('div');
+                    const areaKey = actividadAreas[idx];
+                    barra.style.background = areas[areaKey].color;
+                    barra.style.zIndex = '1';
+                    barra.style.left = bar.left + 'px';
+                    barra.style.width = bar.width + 'px';
+
+                    if (bar.type === 'NA') {
+                        barra.className = 'barra na';
+                        barra.textContent = '✗';
+                    } else if (bar.type === 'TR') {
+                        barra.className = 'barra';
+                        barra.style.opacity = '0.3';
+                        if (actividadesData[idx].entrada) {
+                            barra.classList.add('entrada-' + actividadesData[idx].entrada.toLowerCase());
+                        }
+                    } else if (bar.milestone) {
+                        barra.className = 'barra milestone';
+                        barra.textContent = '';
                     } else {
+                        barra.className = 'barra';
+                        barra.textContent = bar.label || '';
+                        if (actividadesData[idx].entrada) {
+                            barra.classList.add('entrada-' + actividadesData[idx].entrada.toLowerCase());
+                        }
+                    }
+
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+
+                    if (bar.type === 'NA') {
+                        tooltip.textContent = 'No Aplica';
+                    } else if (bar.type === 'TR') {
+                        const entrada = actividadesData[idx].entrada ? ` | ${actividadesData[idx].entrada}` : '';
+                        tooltip.textContent = `Transversal (Inicio a Fin)${entrada}`;
+                    } else {
+                        const inicio = actividadesData[idx].inicio;
+                        const fin = inicio + (actividadesData[idx].dias || 0) - 1;
+                        const entrada = actividadesData[idx].entrada ? ` | ${actividadesData[idx].entrada}` : '';
+                        tooltip.textContent = `Día ${inicio} - Día ${fin}${entrada}`;
+                    }
+
+                    barra.appendChild(tooltip);
+
+                    barra.addEventListener('mouseenter', () => {
+                        tooltip.style.display = 'block';
+                        if (idx === 0) {
+                            tooltip.classList.remove('top');
+                            tooltip.classList.add('bottom');
+                        } else {
+                            tooltip.classList.remove('bottom');
+                            tooltip.classList.add('top');
+                        }
+                        const tooltipRect = tooltip.getBoundingClientRect();
+                        if (tooltipRect.left < 0) {
+                            tooltip.style.left = '0';
+                            tooltip.style.transform = 'none';
+                        } else if (tooltipRect.right > window.innerWidth) {
+                            tooltip.style.right = '0';
+                            tooltip.style.left = 'auto';
+                            tooltip.style.transform = 'none';
+                        } else {
+                            tooltip.style.left = '50%';
+                            tooltip.style.right = 'auto';
+                            tooltip.style.transform = 'translateX(-50%)';
+                        }
+                    });
+
+                    barra.addEventListener('mouseleave', () => {
+                        tooltip.style.display = 'none';
                         tooltip.style.left = '50%';
                         tooltip.style.right = 'auto';
                         tooltip.style.transform = 'translateX(-50%)';
-                    }
-                });
+                    });
 
-                barra.addEventListener('mouseleave', () => {
-                    tooltip.style.display = 'none';
-                    tooltip.style.left = '50%';
-                    tooltip.style.right = 'auto';
-                    tooltip.style.transform = 'translateX(-50%)';
-                });
-
-                timeline.appendChild(barra);
+                    timeline.appendChild(barra);
+                }
                 row.appendChild(timeline);
                 timelineSection.appendChild(row);
             });
@@ -902,7 +743,7 @@
                 {left: 150, width: 70, label: '7', area: 4},
                 {left: 220, width: 70, label: '7', area: 5},
                 {left: 290, width: 50, label: '5', area: 6},
-                {left: 340, width: 50, label: '5', area: 7},
+                {left: 20, width: 320, label: '32', area: 7, color: '#f0c4c4'},
                 {left: 390, width: 70, label: '7', area: 8},
                 {left: 460, width: 70, label: '7', area: 9},
                 {left: 530, width: 5, milestone: true, area: 10},
@@ -1042,21 +883,45 @@
                 }
                 timeline.appendChild(svg);
 
-                const barra = document.createElement('div');
-                barra.className = bar.milestone ? 'barra milestone' : 'barra';
-                const areaKey = actividadAreas[bar.area];
-                barra.style.background = areas[areaKey].color;
-                barra.style.zIndex = '1';
+                if (bar.type === 'DISCONTINUA') {
+                    const areaKey = actividadAreas[idx];
+                    const color = areas[areaKey].color;
 
-                if (bar.milestone) {
-                    barra.style.left = (bar.left - 6) + 'px';
+                    // Crear puntos desde inicio hasta maxDay
+                    for (let day = bar.inicio; day <= maxDay; day += 2) {
+                        const punto = document.createElement('div');
+                        punto.className = 'barra milestone';
+                        punto.style.background = color;
+                        punto.style.left = ((day - 1) * 10 - 6) + 'px';
+                        punto.style.zIndex = '1';
+                        timeline.appendChild(punto);
+                    }
+
+                    // Crear barra continua desde maxDay en adelante
+                    const barraFinal = document.createElement('div');
+                    barraFinal.className = 'barra';
+                    barraFinal.style.background = color;
+                    barraFinal.style.left = (maxDay * 10) + 'px';
+                    barraFinal.style.width = (timelineWidth - (maxDay * 10)) + 'px';
+                    barraFinal.style.zIndex = '1';
+                    timeline.appendChild(barraFinal);
                 } else {
-                    barra.style.left = bar.left + 'px';
-                    barra.textContent = bar.label || '';
-                }
-                barra.style.width = bar.width + 'px';
+                    const barra = document.createElement('div');
+                    barra.className = bar.milestone ? 'barra milestone' : 'barra';
+                    const areaKey = actividadAreas[bar.area];
+                    barra.style.background = bar.color || areas[areaKey].color;
+                    barra.style.zIndex = '1';
 
-                timeline.appendChild(barra);
+                    if (bar.milestone) {
+                        barra.style.left = (bar.left - 6) + 'px';
+                    } else {
+                        barra.style.left = bar.left + 'px';
+                        barra.textContent = bar.label || '';
+                    }
+                    barra.style.width = bar.width + 'px';
+
+                    timeline.appendChild(barra);
+                }
                 row.appendChild(timeline);
                 timelineSection.appendChild(row);
             });
@@ -1084,7 +949,7 @@
                 {left: 430, width: 280, label: '28', area: 4},
                 {left: 710, width: 140, label: '14', area: 5},
                 {left: 850, width: 70, label: '7', area: 6},
-                {left: 920, width: 140, label: '14', area: 7},
+                {left: 20, width: 870, label: '87', area: 7, color: '#f0c4c4'},
                 {left: 1060, width: 70, label: '7', area: 8},
                 {left: 1130, width: 70, label: '7', area: 9},
                 {left: 1200, width: 5, milestone: true, area: 10},
@@ -1224,21 +1089,45 @@
                 }
                 timeline.appendChild(svg);
 
-                const barra = document.createElement('div');
-                barra.className = bar.milestone ? 'barra milestone' : 'barra';
-                const areaKey = actividadAreas[bar.area];
-                barra.style.background = areas[areaKey].color;
-                barra.style.zIndex = '1';
+                if (bar.type === 'DISCONTINUA') {
+                    const areaKey = actividadAreas[idx];
+                    const color = areas[areaKey].color;
 
-                if (bar.milestone) {
-                    barra.style.left = (bar.left - 6) + 'px';
+                    // Crear puntos desde inicio hasta maxDay
+                    for (let day = bar.inicio; day <= maxDay; day += 2) {
+                        const punto = document.createElement('div');
+                        punto.className = 'barra milestone';
+                        punto.style.background = color;
+                        punto.style.left = ((day - 1) * 10 - 6) + 'px';
+                        punto.style.zIndex = '1';
+                        timeline.appendChild(punto);
+                    }
+
+                    // Crear barra continua desde maxDay en adelante
+                    const barraFinal = document.createElement('div');
+                    barraFinal.className = 'barra';
+                    barraFinal.style.background = color;
+                    barraFinal.style.left = (maxDay * 10) + 'px';
+                    barraFinal.style.width = (timelineWidth - (maxDay * 10)) + 'px';
+                    barraFinal.style.zIndex = '1';
+                    timeline.appendChild(barraFinal);
                 } else {
-                    barra.style.left = bar.left + 'px';
-                    barra.textContent = bar.label || '';
-                }
-                barra.style.width = bar.width + 'px';
+                    const barra = document.createElement('div');
+                    barra.className = bar.milestone ? 'barra milestone' : 'barra';
+                    const areaKey = actividadAreas[bar.area];
+                    barra.style.background = bar.color || areas[areaKey].color;
+                    barra.style.zIndex = '1';
 
-                timeline.appendChild(barra);
+                    if (bar.milestone) {
+                        barra.style.left = (bar.left - 6) + 'px';
+                    } else {
+                        barra.style.left = bar.left + 'px';
+                        barra.textContent = bar.label || '';
+                    }
+                    barra.style.width = bar.width + 'px';
+
+                    timeline.appendChild(barra);
+                }
                 row.appendChild(timeline);
                 timelineSection.appendChild(row);
             });
@@ -1262,46 +1151,7 @@
 
             let datos, actividades, capitulos, maxDay;
 
-            if (tipoEscenario === 'srm') {
-                const actividadesSRM = [
-                    {capitulo: 'CALCULO DE CANTIDADES', nombre: 'CALCULO DE CANTIDADES', tics: 1, duracion: 4, inicio: 1},
-                    {capitulo: '', nombre: 'PLIEGO DE LICITACIÓN REDES', tics: 0, duracion: 0, inicio: 5},
-                    {capitulo: '', nombre: 'LICITACIONES', tics: 0, duracion: 1, inicio: 5},
-                    {capitulo: '', nombre: 'RECIBO DE COTIZACIÓN', tics: 0, duracion: 7, inicio: 6},
-                    {capitulo: 'CUADRO COMPARATIVO', nombre: 'REALIZAR CUADRO COMPARATIVO EN FORMATO DE CONTROL', tics: 1, duracion: 1, inicio: 13},
-                    {capitulo: '', nombre: 'REVISIÓN POR ÁREA DE CONTROL DE COSTOS', tics: 0, duracion: 7, inicio: 14},
-                    {capitulo: '', nombre: 'CONCILIACIÓN', tics: 1, duracion: 0, inicio: 21},
-                    {capitulo: '', nombre: 'CONCILIACIÓN CON PPTO, TECNICO, DISEÑO', tics: 1, duracion: 0, inicio: 21},
-                    {capitulo: '', nombre: 'PRESENTACIÓN CUADRO COMPARATIVO COMITÉ', tics: 1, duracion: 0, inicio: 21},
-                    {capitulo: '', nombre: 'FIRMA ZOHO', tics: 0, duracion: 7, inicio: 21},
-                    {capitulo: '', nombre: 'CREACIÓN DE TERCERO', tics: 0, duracion: 0, inicio: 28},
-                    {capitulo: 'SOLICITUD DE CONTRATACION', nombre: 'REALIZAR SOLICITUD DE CONTRATO', tics: 1, duracion: 0, inicio: 28},
-                    {capitulo: '', nombre: 'PROYECCIÓN', tics: 0, duracion: 7, inicio: 13},
-                    {capitulo: 'ELABORACION DE CONTRATO', nombre: 'MIGRACIÓN DE SOLICITUD DE CONTRATO A SINCO', tics: 1, duracion: 1, inicio: 28},
-                    {capitulo: '', nombre: 'APROBACIÓN EN SINCO', tics: 0, duracion: 2, inicio: 29},
-                    {capitulo: '', nombre: 'IMPRESIÓN DIGITAL', tics: 0, duracion: 1, inicio: 31},
-                    {capitulo: '', nombre: 'FIRMA ZOHO', tics: 0, duracion: 7, inicio: 32},
-                    {capitulo: '', nombre: 'TRÁMITE, RECEPCIÓN Y REVISIÓN PÓLIZAS', tics: 0, duracion: 7, inicio: 39},
-                    {capitulo: 'PERFECCIONAMIENTO DE CONTRATO', nombre: 'ENVÍO A CONTROL INTERNO', tics: 0, duracion: 1, inicio: 46},
-                    {capitulo: '', nombre: 'LISTA DE CHEQUEO CONTROL INTERNO', tics: 0, duracion: 2, inicio: 47},
-                    {capitulo: 'CORTES DE OBRA', nombre: 'PREACTAS DIGITALES', tics: 0, duracion: 7, inicio: 49},
-                    {capitulo: '', nombre: 'ACTA DE OBRA Y FACTURACIÓN', tics: 0, duracion: 0, inicio: 56},
-                    {capitulo: '', nombre: 'PROGRAMACIÓN Y APROBACIÓN', tics: 0, duracion: 0, inicio: 56},
-                    {capitulo: '', nombre: 'PROGRAMACIÓN DE PAGOS', tics: 0, duracion: 0, inicio: 56},
-                    {capitulo: 'PAGOS', nombre: 'VERIFICACIÓN DE PAGOS', tics: 0, duracion: 1, inicio: 56}
-                ];
-                datos = actividadesSRM.map((act, idx) => ({
-                    left: (act.inicio - 1) * 10,
-                    width: act.duracion * 10 || 5,
-                    label: act.duracion > 0 ? act.duracion : '',
-                    area: idx,
-                    tics: act.tics,
-                    milestone: act.duracion === 0
-                }));
-                maxDay = 64;
-                actividades = actividadesSRM.map(a => a.nombre);
-                capitulos = actividadesSRM.map(a => a.capitulo);
-            } else if (tipoEscenario === 'automatizacion') {
+            if (tipoEscenario === 'automatizacion') {
                 const actividadesData = [
                     {capitulo: 'CALCULO DE CANTIDADES', nombre: 'CALCULO DE CANTIDADES', dias: 4, inicio: 1, entrada: 'BIM'},
                     {capitulo: '', nombre: 'PLIEGO DE LICITACIÓN REDES', dias: 0, inicio: 1, entrada: ''},
@@ -1310,7 +1160,7 @@
                     {capitulo: 'CUADRO COMPARATIVO', nombre: 'REALIZAR CUADRO COMPARATIVO EN FORMATO DE CONTROL', dias: 1, inicio: 13, entrada: 'SRM'},
                     {capitulo: '', nombre: 'REVISIÓN POR ÁREA DE CONTROL DE COSTOS', dias: 4, inicio: 2, entrada: ''},
                     {capitulo: '', nombre: 'CONCILIACIÓN', dias: 4, inicio: 2, entrada: ''},
-                    {capitulo: '', nombre: 'CONCILIACIÓN CON PPTO, TECNICO, DISEÑO', dias: 'TR', inicio: 'TR', entrada: ''},
+                    {capitulo: '', nombre: 'CONCILIACIÓN CON PPTO, TECNICO, DISEÑO', dias: 'DISCONTINUA', inicio: 2, entrada: ''},
                     {capitulo: '', nombre: 'PRESENTACIÓN CUADRO COMPARATIVO COMITÉ', dias: 7, inicio: 14, entrada: ''},
                     {capitulo: '', nombre: 'FIRMA ZOHO', dias: 0, inicio: 21, entrada: 'SRM'},
                     {capitulo: '', nombre: 'CREACIÓN DE TERCERO', dias: 4, inicio: 2, entrada: 'SRM'},
@@ -1336,6 +1186,8 @@
                 datos = actividadesData.map((act, idx) => {
                     if (act.dias === 'NA') {
                         return { left: (act.inicio - 1) * 10, width: 0, label: '', area: idx, type: 'NA' };
+                    } else if (act.dias === 'DISCONTINUA') {
+                        return { left: (act.inicio - 1) * 10, width: maxDay * 10 - ((act.inicio - 1) * 10), label: '', area: idx, type: 'DISCONTINUA', inicio: act.inicio };
                     } else if (act.dias === 'TR' && act.inicio === 'TR') {
                         return { left: 0, width: maxDay * 10, label: '', area: idx, type: 'TR' };
                     } else {
@@ -1362,7 +1214,7 @@
                     {left: 150, width: 70, label: '7', area: 4},
                     {left: 220, width: 70, label: '7', area: 5},
                     {left: 290, width: 50, label: '5', area: 6},
-                    {left: 340, width: 50, label: '5', area: 7},
+                    {left: 20, width: 320, label: '32', area: 7, color: '#f0c4c4'},
                     {left: 390, width: 70, label: '7', area: 8},
                     {left: 460, width: 70, label: '7', area: 9},
                     {left: 530, width: 5, milestone: true, area: 10},
@@ -1407,7 +1259,7 @@
                     {left: 430, width: 280, label: '28', area: 4},
                     {left: 710, width: 140, label: '14', area: 5},
                     {left: 850, width: 70, label: '7', area: 6},
-                    {left: 920, width: 140, label: '14', area: 7},
+                    {left: 20, width: 870, label: '87', area: 7, color: '#f0c4c4'},
                     {left: 1060, width: 70, label: '7', area: 8},
                     {left: 1130, width: 70, label: '7', area: 9},
                     {left: 1200, width: 5, milestone: true, area: 10},
@@ -1578,31 +1430,62 @@
                 rowTimeline.style.flexShrink = '0';
 
                 if (datos[idx]) {
-                    const bar = document.createElement('div');
-                    const areaKey = actividadAreas[idx];
-                    bar.style.position = 'absolute';
-                    bar.style.left = datos[idx].left + 'px';
-                    bar.style.width = datos[idx].width + 'px';
-                    bar.style.height = '25px';
-                    bar.style.top = '7.5px';
-                    bar.style.background = areas[areaKey].color;
-                    bar.style.borderRadius = '3px';
-                    bar.style.display = 'flex';
-                    bar.style.alignItems = 'center';
-                    bar.style.justifyContent = 'center';
-                    bar.style.color = 'white';
-                    bar.style.fontSize = '10px';
-                    bar.style.fontWeight = 'bold';
+                    if (datos[idx].type === 'DISCONTINUA') {
+                        const areaKey = actividadAreas[idx];
+                        const color = areas[areaKey].color;
 
-                    if (datos[idx].milestone) {
-                        bar.style.borderRadius = '50%';
-                        bar.style.width = '8px';
-                        bar.style.height = '8px';
-                    } else if (datos[idx].label) {
-                        bar.textContent = datos[idx].label;
+                        // Crear puntos desde inicio hasta maxDay
+                        for (let day = datos[idx].inicio; day <= maxDay; day += 2) {
+                            const punto = document.createElement('div');
+                            punto.style.position = 'absolute';
+                            punto.style.left = ((day - 1) * 10 - 5) + 'px';
+                            punto.style.width = '10px';
+                            punto.style.height = '10px';
+                            punto.style.top = '15px';
+                            punto.style.background = color;
+                            punto.style.borderRadius = '50%';
+                            punto.style.zIndex = '1';
+                            rowTimeline.appendChild(punto);
+                        }
+
+                        // Crear barra continua desde maxDay en adelante
+                        const barraFinal = document.createElement('div');
+                        barraFinal.style.position = 'absolute';
+                        barraFinal.style.left = (maxDay * 10) + 'px';
+                        barraFinal.style.width = (timelineWidth - (maxDay * 10)) + 'px';
+                        barraFinal.style.height = '25px';
+                        barraFinal.style.top = '7.5px';
+                        barraFinal.style.background = color;
+                        barraFinal.style.borderRadius = '3px';
+                        barraFinal.style.zIndex = '1';
+                        rowTimeline.appendChild(barraFinal);
+                    } else {
+                        const bar = document.createElement('div');
+                        const areaKey = actividadAreas[idx];
+                        bar.style.position = 'absolute';
+                        bar.style.left = datos[idx].left + 'px';
+                        bar.style.width = datos[idx].width + 'px';
+                        bar.style.height = '25px';
+                        bar.style.top = '7.5px';
+                        bar.style.background = datos[idx].color || areas[areaKey].color;
+                        bar.style.borderRadius = '3px';
+                        bar.style.display = 'flex';
+                        bar.style.alignItems = 'center';
+                        bar.style.justifyContent = 'center';
+                        bar.style.color = 'white';
+                        bar.style.fontSize = '10px';
+                        bar.style.fontWeight = 'bold';
+
+                        if (datos[idx].milestone) {
+                            bar.style.borderRadius = '50%';
+                            bar.style.width = '8px';
+                            bar.style.height = '8px';
+                        } else if (datos[idx].label) {
+                            bar.textContent = datos[idx].label;
+                        }
+
+                        rowTimeline.appendChild(bar);
                     }
-
-                    rowTimeline.appendChild(bar);
                 }
 
                 timelineContent.appendChild(rowTimeline);
@@ -1661,7 +1544,6 @@
         }
 
         // Inicializar todos los escenarios
-        renderSRM();
         renderAutomatizacion();
         renderOptimista();
         renderPesimista();

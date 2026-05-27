@@ -434,7 +434,7 @@
                 {capitulo: 'CUADRO COMPARATIVO', nombre: 'REALIZAR CUADRO COMPARATIVO EN FORMATO DE CONTROL', dias: 1, inicio: 13, entrada: 'SRM'},
                 {capitulo: '', nombre: 'REVISIÓN POR ÁREA DE CONTROL DE COSTOS', dias: 4, inicio: 2, entrada: ''},
                 {capitulo: '', nombre: 'CONCILIACIÓN', dias: 4, inicio: 2, entrada: ''},
-                {capitulo: '', nombre: 'CONCILIACIÓN CON PPTO, TECNICO, DISEÑO', dias: 'DISCONTINUA', inicio: 2, entrada: ''},
+                {capitulo: '', nombre: 'CONCILIACIÓN CON PPTO, TECNICO, DISEÑO', dias: 'DISCONTINUA', inicio: 2, entrada: '', color: '#f0c4c4'},
                 {capitulo: '', nombre: 'PRESENTACIÓN CUADRO COMPARATIVO COMITÉ', dias: 7, inicio: 14, entrada: ''},
                 {capitulo: '', nombre: 'FIRMA ZOHO', dias: 0, inicio: 21, entrada: 'SRM'},
                 {capitulo: '', nombre: 'CREACIÓN DE TERCERO', dias: 4, inicio: 2, entrada: 'SRM'},
@@ -604,7 +604,7 @@
 
                 if (bar.type === 'DISCONTINUA') {
                     const areaKey = actividadAreas[idx];
-                    const color = areas[areaKey].color;
+                    const color = actividadesData[idx].color || areas[areaKey].color;
 
                     // Crear puntos desde inicio hasta maxDay
                     for (let day = actividadesData[idx].inicio; day <= bar.maxDay; day += 2) {
@@ -743,10 +743,10 @@
                 {left: 150, width: 70, label: '7', area: 4},
                 {left: 220, width: 70, label: '7', area: 5},
                 {left: 290, width: 50, label: '5', area: 6},
-                {left: 20, width: 320, label: '32', area: 7, color: '#f0c4c4'},
+                {left: 340, width: 50, label: '5', area: 7},
                 {left: 390, width: 70, label: '7', area: 8},
                 {left: 460, width: 70, label: '7', area: 9},
-                {left: 530, width: 5, milestone: true, area: 10},
+                {left: 460, width: 70, label: '7', area: 10},
                 {left: 530, width: 20, label: '2', area: 11},
                 {left: 550, width: 70, label: '7', area: 12},
                 {left: 620, width: 10, label: '1', area: 13},
@@ -757,9 +757,9 @@
                 {left: 800, width: 10, label: '1', area: 18},
                 {left: 810, width: 20, label: '2', area: 19},
                 {left: 830, width: 70, label: '7', area: 20},
-                {left: 900, width: 5, milestone: true, area: 21},
-                {left: 900, width: 5, milestone: true, area: 22},
-                {left: 900, width: 5, milestone: true, area: 23},
+                {left: 830, width: 70, label: '7', area: 21},
+                {left: 830, width: 70, label: '7', area: 22},
+                {left: 830, width: 70, label: '7', area: 23},
                 {left: 900, width: 10, label: '1', area: 24}
             ];
             const maxDay = 91;
@@ -949,7 +949,7 @@
                 {left: 430, width: 280, label: '28', area: 4},
                 {left: 710, width: 140, label: '14', area: 5},
                 {left: 850, width: 70, label: '7', area: 6},
-                {left: 20, width: 870, label: '87', area: 7, color: '#f0c4c4'},
+                {left: 920, width: 140, label: '14', area: 7},
                 {left: 1060, width: 70, label: '7', area: 8},
                 {left: 1130, width: 70, label: '7', area: 9},
                 {left: 1200, width: 5, milestone: true, area: 10},
@@ -1160,7 +1160,7 @@
                     {capitulo: 'CUADRO COMPARATIVO', nombre: 'REALIZAR CUADRO COMPARATIVO EN FORMATO DE CONTROL', dias: 1, inicio: 13, entrada: 'SRM'},
                     {capitulo: '', nombre: 'REVISIÓN POR ÁREA DE CONTROL DE COSTOS', dias: 4, inicio: 2, entrada: ''},
                     {capitulo: '', nombre: 'CONCILIACIÓN', dias: 4, inicio: 2, entrada: ''},
-                    {capitulo: '', nombre: 'CONCILIACIÓN CON PPTO, TECNICO, DISEÑO', dias: 'DISCONTINUA', inicio: 2, entrada: ''},
+                    {capitulo: '', nombre: 'CONCILIACIÓN CON PPTO, TECNICO, DISEÑO', dias: 'DISCONTINUA', inicio: 2, entrada: '', color: '#f0c4c4'},
                     {capitulo: '', nombre: 'PRESENTACIÓN CUADRO COMPARATIVO COMITÉ', dias: 7, inicio: 14, entrada: ''},
                     {capitulo: '', nombre: 'FIRMA ZOHO', dias: 0, inicio: 21, entrada: 'SRM'},
                     {capitulo: '', nombre: 'CREACIÓN DE TERCERO', dias: 4, inicio: 2, entrada: 'SRM'},
@@ -1214,10 +1214,10 @@
                     {left: 150, width: 70, label: '7', area: 4},
                     {left: 220, width: 70, label: '7', area: 5},
                     {left: 290, width: 50, label: '5', area: 6},
-                    {left: 20, width: 320, label: '32', area: 7, color: '#f0c4c4'},
+                    {left: 340, width: 50, label: '5', area: 7},
                     {left: 390, width: 70, label: '7', area: 8},
                     {left: 460, width: 70, label: '7', area: 9},
-                    {left: 530, width: 5, milestone: true, area: 10},
+                    {left: 460, width: 70, label: '7', area: 10},
                     {left: 530, width: 20, label: '2', area: 11},
                     {left: 550, width: 70, label: '7', area: 12},
                     {left: 620, width: 10, label: '1', area: 13},
@@ -1228,9 +1228,9 @@
                     {left: 800, width: 10, label: '1', area: 18},
                     {left: 810, width: 20, label: '2', area: 19},
                     {left: 830, width: 70, label: '7', area: 20},
-                    {left: 900, width: 5, milestone: true, area: 21},
-                    {left: 900, width: 5, milestone: true, area: 22},
-                    {left: 900, width: 5, milestone: true, area: 23},
+                    {left: 830, width: 70, label: '7', area: 21},
+                    {left: 830, width: 70, label: '7', area: 22},
+                    {left: 830, width: 70, label: '7', area: 23},
                     {left: 900, width: 10, label: '1', area: 24}
                 ];
                 datos = dataOpt;
@@ -1259,7 +1259,7 @@
                     {left: 430, width: 280, label: '28', area: 4},
                     {left: 710, width: 140, label: '14', area: 5},
                     {left: 850, width: 70, label: '7', area: 6},
-                    {left: 20, width: 870, label: '87', area: 7, color: '#f0c4c4'},
+                    {left: 920, width: 140, label: '14', area: 7},
                     {left: 1060, width: 70, label: '7', area: 8},
                     {left: 1130, width: 70, label: '7', area: 9},
                     {left: 1200, width: 5, milestone: true, area: 10},
@@ -1432,7 +1432,12 @@
                 if (datos[idx]) {
                     if (datos[idx].type === 'DISCONTINUA') {
                         const areaKey = actividadAreas[idx];
-                        const color = areas[areaKey].color;
+                        let color = areas[areaKey].color;
+
+                        // Usar color personalizado si existe (para automatización)
+                        if (tipoEscenario === 'automatizacion' && actividadesData && actividadesData[idx] && actividadesData[idx].color) {
+                            color = actividadesData[idx].color;
+                        }
 
                         // Crear puntos desde inicio hasta maxDay
                         for (let day = datos[idx].inicio; day <= maxDay; day += 2) {
